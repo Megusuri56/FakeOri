@@ -20,8 +20,8 @@ public class MainCharaController : MonoBehaviour
 
     bool isDied = false;
 
-    public static int maxHitPoint = 30;
-    public int hitPoint = maxHitPoint;
+    public static int maxHitPoint = 6;
+    int hitPoint = maxHitPoint;
     MainCharaAnimation anim;
     //UImanager ui;
     // Start is called before the first frame update
@@ -94,6 +94,14 @@ public class MainCharaController : MonoBehaviour
     void move()
     {
         transform.Translate(newPosition, Space.World);
+    }
+    public void getHurted()
+    {
+        if (hitPoint > 0)
+        {
+            hitPoint--;
+        }
+        anim.hurted();
     }
     void die()
     {
