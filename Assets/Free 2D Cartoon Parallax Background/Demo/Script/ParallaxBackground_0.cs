@@ -4,40 +4,39 @@ using UnityEngine;
 
 public class ParallaxBackground_0 : MonoBehaviour
 {
-    public bool Camera_Move;
-    public float Camera_MoveSpeed = 1.5f;
     [Header("Layer Setting")]
     public float[] Layer_Speed = new float[7];
     public GameObject[] Layer_Objects = new GameObject[7];
 
     private Transform _camera;
-    private float[] startPos = new float[7];
-    private float boundSizeX;
-    private float sizeX;
+    private Vector2[] startPos = new Vector2[7];
+    private Vector2 boundSize;
+    private Vector2 size;
     private GameObject Layer_0;
     void Start()
     {
         _camera = Camera.main.transform;
-        sizeX = Layer_Objects[0].transform.localScale.x;
-        boundSizeX = Layer_Objects[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x;
-        for (int i=0;i<5;i++){
-            startPos[i] = _camera.position.x;
+        size = new Vector2(Layer_Objects[0].transform.localScale.x, Layer_Objects[0].transform.localScale.y);
+        boundSize = new Vector2(Layer_Objects[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x, Layer_Objects[0].GetComponent<SpriteRenderer>().sprite.bounds.size.y);
+        for (int i=0;i<4;i++){
+            startPos[i] = new Vector2(_camera.position.x, _camera.position.y);
         }
     }
 
     void Update(){
-        //Moving camera
-        if (Camera_Move){
-        _camera.position += Vector3.right * Time.deltaTime * Camera_MoveSpeed;
-        }
-        for (int i=0;i<5;i++){
-            float temp = (_camera.position.x * (1-Layer_Speed[i]) );
-            float distance = _camera.position.x  * Layer_Speed[i];
-            Layer_Objects[i].transform.position = new Vector2 (startPos[i] + distance, _camera.position.y);
-            if (temp > startPos[i] + boundSizeX*sizeX){
-                startPos[i] += boundSizeX*sizeX;
-            }else if(temp < startPos[i] - boundSizeX*sizeX){
-                startPos[i] -= boundSizeX*sizeX;
+        for (int i=0;i<4;i++){
+            Vector2 temp = _camera.position * (1-Layer_Speed[i]);
+            Vector2 distance = _camera.position  * Layer_Speed[i];
+            Layer_Objects[i].transform.position = new Vector2 (startPos[i].x + distance.x, startPos[i].y + distance.y/3);
+            if (temp.x > startPos[i].x + boundSize.x*size.x){
+                startPos[i].x += boundSize.x * size.x;
+            }else if(temp.x < startPos[i].x - boundSize.x*size.x){
+                startPos[i].x -= boundSize.x * size.x;
+            }
+            if (temp.y > startPos[i].y + boundSize.y*size.y){
+                startPos[i].y += boundSize.y * size.y;
+            }else if(temp.y < startPos[i].y - boundSize.y*size.y){
+                startPos[i].y -= boundSize.y * size.y;
             }
             
         }

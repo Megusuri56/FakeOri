@@ -4,47 +4,16 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-    static float gap = 1.0f;
-    float time = gap;
+    bool canHurt = true;
 
-    public bool MCenter = false;
-    public bool canHurt = true;
-
-    MainCharaController mc;
-    // Start is called before the first frame update
-    void Start()
+    void OnCollisionStay2D(Collision2D other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (MCenter)
+        if (other.collider.GetComponentsInParent<CreatureController>()!=null && canHurt)
         {
-            time -= Time.deltaTime;
-            if (time <= 0)
-            {
-                mc.getHurted();
-                time = gap;
-            }
-        }
-    }
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.collider.GetComponent<MainCharaController>())
-        {
-            mc = other.collider.GetComponent<MainCharaController>();
-            MCenter = true;
-            time = 0;
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.collider.GetComponent<MainCharaController>())
-        {
-            MCenter = false;
+            CreatureController[] creatures = other.collider.GetComponentsInParent<CreatureController>();
+            Debug.Log(other.collider.name);
+            foreach (CreatureController creature in creatures)
+                creature.getHurted();
         }
     }
 }
