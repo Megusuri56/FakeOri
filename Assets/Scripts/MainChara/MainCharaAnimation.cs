@@ -14,6 +14,7 @@ public class MainCharaAnimation : AnimationController
     {
         anim.SetBool("isJump", false);
         anim.SetBool("isRun", false);
+        //anim.SetTrigger("idle");
     }
     public override void run()
     {
@@ -32,6 +33,10 @@ public class MainCharaAnimation : AnimationController
         }
         if (ySpeed == 0f && anim.GetBool("isJump"))
             anim.SetBool("isJump", false);
+    }
+    public override void attack()
+    {
+        anim.SetTrigger("attack");
     }
     public override void die()
     {

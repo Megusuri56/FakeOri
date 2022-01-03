@@ -36,13 +36,9 @@ public class PlayerInput : MonoBehaviour
     {
         xAxisInput = Input.GetAxis("Horizontal");
         yAxisInput = Input.GetAxisRaw("Vertical");
-        if (yAxisInput <= 0)
+        if (yAxisInput == 0f && Input.GetButtonDown("Dash"))
         {
-            yAxisInput = 0;
-            if (Input.GetButtonDown("Dash"))
-            {
-                dashing = true;
-            }
+            dashing = true;
         }
     }
     void quit()

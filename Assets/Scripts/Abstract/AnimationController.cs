@@ -8,5 +8,6 @@ public abstract class AnimationController : MonoBehaviour
     public abstract void idle();
     public abstract void hurted();
     public abstract void jump(float ySpeed);
+    public abstract void attack();
     public abstract void die();
 }
