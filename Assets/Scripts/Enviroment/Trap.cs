@@ -11,16 +11,14 @@ public class Trap : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D other)
     {
-        if (other.collider.GetComponentsInParent<CreatureController>()!=null && canHurt)
-        {
-            CreatureController[] creatures = other.collider.GetComponentsInParent<CreatureController>();
-            for(int i = 0; i < creatures.Length; i++)
+        CreatureController creature = other.collider.GetComponentInParent<CreatureController>();
+        Debug.Log("a=" + gameObject + ",b=" + other.collider);
+        if (creature != null && canHurt)
+        { 
+            if (creature.getHurted())
             {
-                if (creatures[i].getHurted())
-                {
-                    creatures[i].rebound(force);
-                }
-            }    
+                 creature.rebound(force);
+             }
         }
     }
 }

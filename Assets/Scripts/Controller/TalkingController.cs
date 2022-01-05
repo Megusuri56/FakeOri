@@ -53,7 +53,7 @@ public class TalkingController : MonoBehaviour
             if (size.y < textAll[index].Length * lineHeight)
             {
                 BubbleObj.GetComponent<SpriteRenderer>().size = new Vector2(textAll[index].Length * lineHeight, size.y);
-                BubbleObj.GetComponentInChildren<RectTransform>().size
+                //BubbleObj.GetComponentInChildren<RectTransform>().size
             }
             textObj.text = textAll[index];
             waitingTime = textAll[index].Length / dialogSpeed;

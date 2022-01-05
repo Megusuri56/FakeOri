@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class CreatureController : MonoBehaviour
 {
     public AnimationController anim;
+    public SoundController sound;
 
     private Rigidbody2D thisRigidBody;
 
@@ -16,39 +17,38 @@ public class CreatureController : MonoBehaviour
     public float maxSpeed = 10f;
     public float minSpeed = 4f;
     private const float movementSmooth = 0.1f;
+    private const float airResistance = 1f;
     private float gravity;
     public float jumpForce = 30f;
     public float dashForce = 50f;
-
+    [Space]
     bool canMove = true;
     bool canFly = false;
     bool canJump = false;
     bool canHurted = true;
-
+    [Space]
     bool isRight = true;//ÊÇ·ñ³¯ÓÒ
-    bool inAir = false;//ÊÇ·ñÐü¿Õ
     bool isGrounded = false;
     bool isDashing = false;
     bool isOnLadder = false;
-
+    [Space]
     bool isDied = false;
-
+    [Space]
     public int maxHitPoint = 6;
     public int hitPoint;
-
+    [Space]
     private LayerMask GroundLayer;
     public Transform[] GroundedCheckPoints;
     const float GroundedRadius = .1f;
     private Collider2D[] groundCheckCol = new Collider2D[5];
-
+    [Space]
     private LayerMask LadderLayer;
     public Transform[] ClimbCheckPoints;
     const float ClimbRadius = .1f;
     private Collider2D[] ladderCheckCol = new Collider2D[5];
-
+    [Space]
     public float hurtGap = 1;
     private float time = 0;
-
     // Start is called before the first frame update
     private void Awake()
     {
@@ -61,6 +61,7 @@ public class CreatureController : MonoBehaviour
         GroundLayer = LayerMask.GetMask("Ground");
         LadderLayer = LayerMask.GetMask("Ladder");
         gravity = thisRigidBody.gravityScale;
+        thisRigidBody.velocity = Vector2.zero;
     }
     // Update is called once per frame
     void Update()
@@ -91,6 +92,10 @@ public class CreatureController : MonoBehaviour
                 if (groundCheckCol[i].gameObject != gameObject)
                 {
                     isGrounded = true;
+                    if (thisRigidBody.velocity.y < 0f)
+                    {
+                        sound.land();
+                    }
                 }
             }
         }
@@ -120,6 +125,8 @@ public class CreatureController : MonoBehaviour
     }
     void dash()
     {
+        isDashing = true;
+        sound.dash();
         thisRigidBody.AddForce(Direction * dashForce, ForceMode2D.Impulse);
     }
     public void rebound(float force)
@@ -153,6 +160,7 @@ public class CreatureController : MonoBehaviour
             }
             if (isOnLadder)
             {
+                sound.runEnd();
                 anim.attack();
                 canJump = false;
                 if (speed > maxSpeed)
@@ -186,18 +194,24 @@ public class CreatureController : MonoBehaviour
             {
                 if (isGrounded || canFly)
                 {
+                    thisRigidBody.gravityScale = gravity;
                     if (xAxis != 0f)
                     {
+                        sound.runStart();
                         anim.run();
                     }
-                    else if (yAxis == 0f)
+                    else 
                     {
-                        anim.idle();
+                        
+                        if (yAxis == 0f)
+                        {
+                            sound.runEnd();
+                            anim.idle();
+                        }
                     }
                     canJump = true;
                     if (dashing)
                     {
-                        isDashing = true;
                         dash();
                     }
                     if (speed > maxSpeed)
@@ -213,21 +227,26 @@ public class CreatureController : MonoBehaviour
                 {
                     if (yAxis == 0f)
                     {
+                        sound.runEnd();
                         anim.idle();
+                        thisRigidBody.gravityScale = gravity - airResistance;
                     }
                     else
                     {
+                        sound.runEnd();
                         anim.jump(yAxis);
                     }
                 }
 
                 if (canJump && yAxis > 0)//ÌøÔ¾
                 {
+                    sound.runEnd();
+                    sound.jump();
                     thisRigidBody.velocity = new Vector2(thisRigidBody.velocity.x, yAxis * jumpForce);
                     canJump = false;
                 }
             }
-        }
+        }       
     }
     public bool getHurted()
     {
