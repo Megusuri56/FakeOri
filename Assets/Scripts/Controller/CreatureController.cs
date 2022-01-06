@@ -225,6 +225,7 @@ public class CreatureController : MonoBehaviour
                 }
                 else
                 {
+                    canJump = false;
                     if (yAxis == 0f)
                     {
                         sound.runEnd();
@@ -243,7 +244,6 @@ public class CreatureController : MonoBehaviour
                     sound.runEnd();
                     sound.jump();
                     thisRigidBody.velocity = new Vector2(thisRigidBody.velocity.x, yAxis * jumpForce);
-                    canJump = false;
                 }
             }
         }       

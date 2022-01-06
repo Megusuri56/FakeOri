@@ -29196,11 +29196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738f175f2faaf0d48a27f0a3afdae703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeechBubble: {fileID: 1671054413385502003, guid: f55acb852e12092499b02598d0ed4d1f, type: 3}
-  offset: {x: 2, y: 1.5, z: 0}
+  SpeechBubble: {fileID: 7081430469930319833, guid: 6c91a4285a183aa42bdf5a0635809cad, type: 3}
+  offset: {x: 1, y: 1.5, z: 0}
   textAsset: {fileID: 4900000, guid: e54ca98194621d74aa11b2cc09b0a737, type: 3}
   dialogSpeed: 2.5
-  lineHeight: 1
 --- !u!114 &1039064455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30746,7 +30745,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714041967}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 40, y: 0, z: 0}
+  m_LocalPosition: {x: 40.091, y: -0.256, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1728758470}
@@ -30899,12 +30898,12 @@ GameObject:
   - component: {fileID: 1738973427}
   - component: {fileID: 1738973426}
   - component: {fileID: 1738973423}
-  - component: {fileID: 1738973424}
   - component: {fileID: 1738973425}
+  - component: {fileID: 1738973424}
+  - component: {fileID: 1738973431}
   - component: {fileID: 1738973430}
   - component: {fileID: 1738973429}
   - component: {fileID: 1738973428}
-  - component: {fileID: 1738973431}
   m_Layer: 0
   m_Name: CollegeStudent
   m_TagString: Player
@@ -31439,7 +31438,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 095fe573b573b8d478f4381f192cbf1d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -31580,10 +31579,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 15.290512, y: -1.9035127}
+  m_Offset: {x: 15.948643, y: -1.9035127}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -31594,7 +31593,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.3091888, y: 4.8070254}
+  m_Size: {x: 4.62545, y: 4.8070254}
   m_EdgeRadius: 0
 --- !u!4 &2000528064
 Transform:
@@ -31604,7 +31603,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2000528062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 97.667, y: -6.0457444, z: -198.83473}
+  m_LocalPosition: {x: 97.667, y: -6.0457444, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

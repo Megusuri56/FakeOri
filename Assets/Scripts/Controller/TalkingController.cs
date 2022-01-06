@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TalkingController : MonoBehaviour
 {
     public GameObject SpeechBubble;
-    private GameObject BubbleObj;
+    private GameObject bubbleObj;
     public Vector3 offset = new Vector3(0, 0, 0);
     private Text textObj;
     public TextAsset textAsset;
@@ -16,7 +16,6 @@ public class TalkingController : MonoBehaviour
     private string[] textAll;
     private float waitingTime = 0f;
     public float dialogSpeed = 2.5f;
-    public float lineHeight = 1f;
 
     int index;
     // Start is called before the first frame update
@@ -24,20 +23,17 @@ public class TalkingController : MonoBehaviour
     {
         if (!isTalking)
         {
-            BubbleObj = Instantiate(SpeechBubble, transform.position + offset, Quaternion.identity,talker.transform);
-            textObj = BubbleObj.GetComponentInChildren<Text>();
+            bubbleObj = Instantiate(SpeechBubble, transform.position + offset, Quaternion.identity,talker.transform);
+            textObj = bubbleObj.GetComponentInChildren<Text>();
             getText();
             isTalking = true;
+            Invoke("showDialogue", waitingTime);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isTalking && !isDestroied)
-        {
-            Invoke("showDialogue", waitingTime);
-        }
     }
     void getText()
     {
@@ -49,15 +45,17 @@ public class TalkingController : MonoBehaviour
     {
         if (index < textAll.Length)
         {
-            Vector2 size = BubbleObj.GetComponent<SpriteRenderer>().size;
-            if (size.y < textAll[index].Length * lineHeight)
-            {
-                BubbleObj.GetComponent<SpriteRenderer>().size = new Vector2(textAll[index].Length * lineHeight, size.y);
-                //BubbleObj.GetComponentInChildren<RectTransform>().size
-            }
             textObj.text = textAll[index];
+            ContentSizeFitter fitter = bubbleObj.GetComponentInChildren<ContentSizeFitter>();
+            fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+            fitter.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+            Canvas.ForceUpdateCanvases();
+            fitter.horizontalFit = ContentSizeFitter.FitMode.MinSize;
+            fitter.verticalFit = ContentSizeFitter.FitMode.MinSize;
+            Canvas.ForceUpdateCanvases();
             waitingTime = textAll[index].Length / dialogSpeed;
             index++;
+            Invoke("showDialogue", waitingTime);
         }
         else
         {
@@ -66,7 +64,7 @@ public class TalkingController : MonoBehaviour
     }
     void destroy()
     {
-        Destroy(BubbleObj);
+        Destroy(bubbleObj);
         isDestroied = true;
     }
 }
