@@ -22,7 +22,7 @@ public class CreatureController : MonoBehaviour
     public float jumpForce = 30f;
     public float dashForce = 50f;
     [Space]
-    bool canMove = true;
+    [HideInInspector] public bool canMove = true;
     bool canFly = false;
     bool canJump = false;
     bool canHurted = true;
@@ -61,7 +61,7 @@ public class CreatureController : MonoBehaviour
         GroundLayer = LayerMask.GetMask("Ground");
         LadderLayer = LayerMask.GetMask("Ladder");
         gravity = thisRigidBody.gravityScale;
-        thisRigidBody.velocity = Vector2.zero;
+        //thisRigidBody.velocity = Vector2.zero;
     }
     // Update is called once per frame
     void Update()
@@ -275,4 +275,5 @@ public class CreatureController : MonoBehaviour
         isDied = true;
         anim.die();
     }
+    public void setCanMove(bool _canMove) { canMove = _canMove; }
 }

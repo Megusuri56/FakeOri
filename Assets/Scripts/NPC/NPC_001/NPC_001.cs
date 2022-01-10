@@ -2,54 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC_001 : MonoBehaviour
+public class NPC_001 : CGController
 {
-    public CreatureController npc;
-    public GameObject hintE;
-    private GameObject HintEObj;
+    public CreatureController creatureController;
+    public CG_Scene001_1 mainCharaInCG;
+    private float xAxis = 1f;
 
-    bool isTalking = false;
-    bool pushE = false;
-
-    public TalkingController talkingController;
-    // Start is called before the first frame update
-    void Start()
+    public override void CGgoing()
     {
+        creatureController.move(xAxis, 0f, false);
     }
-    void OnTriggerStay2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        if (!isTalking && other.gameObject.CompareTag("Player"))
+        if (col.gameObject.name.Equals("CheckPoint2"))
         {
-            beforTalk();
+            xAxis = 0f;
         }
-        
-    }
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if(other.gameObject.CompareTag("Player"))
-            Destroy(HintEObj);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        pushE = false;
-        if (!isTalking && Input.GetKey("e"))
+        else if (col.gameObject.name.Equals("CheckPoint1"))
         {
-            pushE = true;
-        }
-    }
-    void beforTalk()
-    {
-        if (GameObject.Find("hintE(Clone)") == null)
-        {
-            HintEObj = Instantiate(hintE,GameObject.Find("Hint").transform);
-            HintEObj.GetComponent<Canvas>().worldCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-        }
-        if (pushE)
-        {
-            isTalking = true;
-            Destroy(HintEObj);
-            talkingController.startTalk(gameObject);
+            mainCharaInCG.xAxis = 1f;
         }
     }
 }

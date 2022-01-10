@@ -8,6 +8,7 @@ public class SoundController : MonoBehaviour
     [SerializeField] private  AudioSource runSound;
     [SerializeField] private  AudioSource landSound;
     [SerializeField] private  AudioSource jumpSound;
+    [SerializeField] private AudioSource chooseSound;
 
     public void dash()
     {
@@ -33,5 +34,10 @@ public class SoundController : MonoBehaviour
     {
         if(jumpSound != null)
         jumpSound.Play();
+    }
+    public void choose()
+    {
+        if (chooseSound != null)
+            chooseSound.Play();
     }
 }

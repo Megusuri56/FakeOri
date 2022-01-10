@@ -48,4 +48,8 @@ public class PlayerInput : MonoBehaviour
             Application.Quit();
         }
     }
+    public void setCanInput(bool _canInput)
+    {
+        canInput = _canInput;
+    } 
 }
