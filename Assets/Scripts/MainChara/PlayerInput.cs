@@ -29,8 +29,12 @@ public class PlayerInput : MonoBehaviour
     }
     void FixedUpdate()
     {
-        controller.move(xAxisInput, yAxisInput, dashing);
-        dashing = false;
+        if (canInput)
+        {
+            controller.move(xAxisInput, yAxisInput, dashing);
+            dashing = false;
+        }
+
     }
     void input()
     {

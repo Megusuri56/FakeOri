@@ -118,7 +118,7 @@ public class CreatureController : MonoBehaviour
             }
         }
     }
-    void flip()
+    public void flip()
     {
         isRight = !isRight;
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
@@ -199,10 +199,8 @@ public class CreatureController : MonoBehaviour
                     {
                         sound.runStart();
                         anim.run();
-                    }
-                    else 
-                    {
-                        
+                    }else 
+                    {  
                         if (yAxis == 0f)
                         {
                             sound.runEnd();

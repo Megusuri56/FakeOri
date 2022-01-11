@@ -13,13 +13,27 @@ public class ParallaxBackground_0 : MonoBehaviour
     private Vector2 boundSize;
     private Vector2 size;
     private GameObject Layer_0;
-    void Start()
+
+    public bool Lighten = false;
+    public float speed = 0.1f;
+    void Awake()
     {
         _camera = Camera.main.transform;
         size = new Vector2(Layer_Objects[0].transform.localScale.x, Layer_Objects[0].transform.localScale.y);
         boundSize = new Vector2(Layer_Objects[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x, Layer_Objects[0].GetComponent<SpriteRenderer>().sprite.bounds.size.y);
         for (int i=0;i<4;i++){
-            startPos[i] = new Vector2(_camera.position.x, _camera.position.y);
+            startPos[i] = Vector2.zero;//(_camera.position.x, _camera.position.y);
+        }
+        if (Lighten)
+        {
+            foreach (GameObject Layer in Layer_Objects)
+            {
+                foreach (SpriteRenderer sr in Layer.GetComponentsInChildren<SpriteRenderer>())
+                {
+                    sr.color = Color.black;
+                }
+            }
+            Invoke("lighten", speed);
         }
     }
 
@@ -39,6 +53,34 @@ public class ParallaxBackground_0 : MonoBehaviour
                 startPos[i].y -= boundSize.y * size.y;
             }
             
+        }
+    }
+    public void lighten()
+    {
+        foreach(GameObject Layer in Layer_Objects)
+        {
+            foreach(SpriteRenderer sr in Layer.GetComponentsInChildren<SpriteRenderer>()){
+                sr.color = sr.color + new Color(0.1f, 0.1f, 0.1f);
+            }
+        }
+        if (!Layer_Objects[0].GetComponent<SpriteRenderer>().color.Equals(Color.white))
+        {
+            Invoke("lighten", speed);
+        }
+        
+    }
+    public void darken()
+    {
+        foreach (GameObject Layer in Layer_Objects)
+        {
+            foreach (SpriteRenderer sr in Layer.GetComponentsInChildren<SpriteRenderer>())
+            {
+                sr.color = sr.color - new Color(0.1f, 0.1f, 0.1f,0f);
+            }
+        }
+        if (Layer_Objects[0].GetComponent<SpriteRenderer>().color.r>0)
+        {
+            Invoke("darken", speed);
         }
     }
 }
